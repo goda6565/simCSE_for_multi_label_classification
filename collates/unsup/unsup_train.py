@@ -12,7 +12,7 @@ def unsup_train_collate_fn(
         [example["text"] for example in examples],
         padding=True,
         truncation=True,
-        max_length=64,
+        max_length=512,
         return_tensors="pt",
     )
 

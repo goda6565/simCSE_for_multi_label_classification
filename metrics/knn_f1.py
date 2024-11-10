@@ -15,7 +15,7 @@ def compute_metrics(p: EvalPrediction) -> dict[str, float]:
 
     # 埋め込みに基づきk近傍法を適用
     for i in range(len(embeddings)):
-      knn = KNeighborsClassifier(n_neighbors=5)
+      knn = KNeighborsClassifier(n_neighbors=3)
       # 予測対象を除く
       knn.fit(np.delete(embeddings, i ,axis=0), np.delete(ans_label, i ,axis=0))
       pred = knn.predict(embeddings[i].reshape(1, -1))

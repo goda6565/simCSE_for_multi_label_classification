@@ -1,12 +1,6 @@
 from datasets import load_dataset
 
 from transformers.trainer_utils import set_seed
-from transformers import AutoTokenizer, AutoModel
-
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import f1_score
-
-from utils.single_label import random_choice
 
 # 乱数のシードを設定する
 set_seed(42)
@@ -22,10 +16,18 @@ test_dataset = load_dataset(
     "Harutiin/eurlex-for-bert", split="test"
 )
 
-valid_dataset = valid_dataset.map(random_choice)
+valid_dataset = valid_dataset
 
 # 訓練セットの形式と事例数・単一ラベル数を確認する
 print(train_dataset)
 print(valid_dataset)
 print(test_dataset)
-print(valid_dataset[2])
+
+from utils.freq_label import freq_labeling
+from utils.label_count import label_count
+
+label_count_list = label_count(valid_dataset)
+
+valid_dataset = valid_dataset.map(lambda example: freq_labeling(example, label_count_list))
+
+print(valid_dataset)
