@@ -1,9 +1,12 @@
 from datasets import load_dataset
 
 from transformers.trainer_utils import set_seed
-from transformers import AutoTokenizer
+from transformers import AutoTokenizer, AutoModel
 
-import lightgbm as lgb
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import f1_score
+
+from utils.single_label import random_choice
 
 # 乱数のシードを設定する
 set_seed(42)
@@ -19,10 +22,10 @@ test_dataset = load_dataset(
     "Harutiin/eurlex-for-bert", split="test"
 )
 
+valid_dataset = valid_dataset.map(random_choice)
+
 # 訓練セットの形式と事例数・単一ラベル数を確認する
 print(train_dataset)
-print(valid_dataset[0])
+print(valid_dataset)
 print(test_dataset)
-
-base_model_name = "cl-nagoya/unsup-simcse-ja-base"
-tokenizer = AutoTokenizer.from_pretrained(base_model_name)
+print(valid_dataset[2])

@@ -28,6 +28,8 @@ SCL only treats samples with exact label matches as positive pairs
 
 ## Evaluation
 ### Training Detail
-Scores are calculated for each step, and the checkpoint with the highest score is used for evaluation.
+At each training step, a performance score is computed, with the highest-scoring checkpoint selected for evaluation. 
 
-To enable simple kNN classification, Macro-F1 score is measured on a sample of single labels in the validation set.
+To facilitate straightforward kNN classification, the Macro-F1 score is assessed on single-label samples within the validation set. 
+
+However, given the limited presence of single-label data in the current dataset, we transform the validation set into a single-label format to ensure reliable evaluation.
