@@ -6,7 +6,7 @@ from transformers.trainer_utils import set_seed
 
 from utils.freq_label import freq_labeling
 from utils.label_count import label_count
-from config.trainning_arg import training_args
+from config.unsup_args import training_args
 from config.princeton import base_model_name
 from metrics.knn_f1 import compute_metrics
 from collates.eval_knn import eval_collate_fn
@@ -29,11 +29,6 @@ test_dataset = load_dataset(
 
 label_count_list = label_count(valid_dataset)
 valid_dataset = valid_dataset.map(lambda example: freq_labeling(example, label_count_list))
-
-# 訓練セットの形式と事例数・単一ラベル数を確認する
-print(train_dataset)
-print(valid_dataset)
-print(test_dataset)
 
 # 教師なしSimCSEのモデルを初期化する
 unsup_model = SimCSEModel(base_model_name, mlp_only_train=True)

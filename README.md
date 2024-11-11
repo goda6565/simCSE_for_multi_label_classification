@@ -1,4 +1,4 @@
-# simCSE for multi label classification
+# SimCSE for multi label classification
 ## Datasets
 eurlex in [lex_glue](https://huggingface.co/datasets/coastalcph/lex_glue)
 
@@ -15,11 +15,11 @@ Use only series lengths between 200 and 512.
 [princeton-nlp/unsup-simcse-bert-base-uncased](https://huggingface.co/princeton-nlp/unsup-simcse-bert-base-uncased)
 
 ## Methods
-### unsup simCSE (Unique Label Sampling)
+### unsup SimCSE (Unique Label Sampling)
 Unique Label Sampling is a batch construction method that uses label information.
 
 This method considers the diversity within a batch, ensuring that all labels within the same batch are different.
-### sup simCSE (SCL)
+### sup SimCSE (SCL)
 SCL is a contrastive learning method using the MLTC dataset.
 
 Sentences with matching labels in the same batch are considered positive pairs, and those without matching labels are considered negative pairs.
@@ -37,4 +37,4 @@ However, given the limited presence of single-label data in the current dataset,
 ### Pruned Problem Transformation (PPT)
 A Pruned Problem Transformation (PPT) method is an approach in multi-label classification where the goal is to simplify the classification problem by transforming it into a series of single-label classification problems. 
 
- This is done by pruning the less relevant or infrequent labels from the data set and validation In this case, based on the frequency of labels in the validation data set, the most frequent label in each data set was taken as the label for that data.
+This is done by pruning the less relevant or infrequent labels from the data set and validation In this case, based on the frequency of labels in the validation data set, the most frequent label in each data set was taken as the label for that data.
