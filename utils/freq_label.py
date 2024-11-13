@@ -1,7 +1,7 @@
 import numpy as np
 
 def freq_labeling(example, sorted_label_key):
-    
+    """データが持つラベルの中で最も頻度が高いものをそのデータのラベルとする"""
     sorted_label_key
     
     label_indices = np.nonzero(example["labels"])[0]

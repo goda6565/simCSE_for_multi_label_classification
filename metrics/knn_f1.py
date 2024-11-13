@@ -4,7 +4,7 @@ from transformers import EvalPrediction
 import numpy as np
 
 def compute_metrics(p: EvalPrediction) -> dict[str, float]:
-    """埋め込みと実際のラベルを用いたバッチ内でのkNNベースのF1スコアを計算"""
+    """最も埋め込みの距離が近いテキストとのJaccard 係数の平均をとる"""
     embeddings = p.predictions
     labels = p.label_ids
     # 正解ラベルのインデックスを持つように変更

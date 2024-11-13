@@ -13,6 +13,10 @@ from collates.eval_knn import eval_collate_fn
 from collates.unsup.unsup_uls_train import unsup_uls_train_collate_fn
 from models.unsup import SimCSEModel
 
+import wandb
+
+wandb.init(project="SimCSE-for -multilabel", name="unsup-uls")
+
 # 乱数のシードを設定する
 set_seed(42)
 

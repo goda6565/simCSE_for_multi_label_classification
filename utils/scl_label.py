@@ -1,28 +1,3 @@
-from datasets import load_dataset
-
-from transformers.trainer_utils import set_seed
-
-# 乱数のシードを設定する
-set_seed(42)
-
-# データ読み込み
-train_dataset = load_dataset(
-    "Harutiin/eurlex-for-bert", split="train"
-)
-valid_dataset = load_dataset(
-    "Harutiin/eurlex-for-bert", split="validation"
-)
-test_dataset = load_dataset(
-    "Harutiin/eurlex-for-bert", split="test"
-)
-
-valid_dataset = valid_dataset
-
-# 訓練セットの形式と事例数・単一ラベル数を確認する
-print(train_dataset)
-print(valid_dataset)
-print(test_dataset)
-
 import random
 
 def drop_unique_label(example, unique_label_dict):
@@ -48,6 +23,7 @@ def set_same_label_text(example, same_label_dict):
     
 
 def create_same_label_datasets(examples):
+    """各データにランダムで同じラベルを持つテキストを付与"""
     # ラベル一覧の取得
     unique_label_dict = {}
     for example in examples:
@@ -58,14 +34,8 @@ def create_same_label_datasets(examples):
     # ラベルがユニークなものを削除
     filtered_examples = examples.filter(lambda example: drop_unique_label(example, unique_label_dict))
     
-    
-    print(filtered_examples)
-    
     same_label_dict = get_same_label(filtered_examples)
     
     annoteted_sample = filtered_examples.map(lambda example: set_same_label_text(example, same_label_dict))
     
     return annoteted_sample
-
-
-print(create_same_label_datasets(train_dataset))

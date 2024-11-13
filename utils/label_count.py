@@ -1,6 +1,7 @@
 import numpy as np
 
 def label_count(example):
+    """ラベルの個数をカウント"""
     # ラベルの個数をカウントするための辞書 
     label_counts = {}
     # 各ラベルセットに対してループ
