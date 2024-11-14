@@ -7,15 +7,15 @@ from transformers.trainer_utils import set_seed
 from utils.freq_label import freq_labeling
 from utils.label_count import label_count
 from config.unsup_uls_args import training_args
-from config.princeton import base_model_name
+from config.princeton import base_model_name, tokenizer
 from metrics.knn_f1 import compute_metrics
-from collates.eval_knn import eval_collate_fn
+from collates.eval import eval_collate_fn
 from collates.unsup.unsup_uls_train import unsup_uls_train_collate_fn
 from models.unsup import SimCSEModel
 
 import wandb
 
-wandb.init(project="SimCSE-for -multilabel", name="unsup-uls")
+wandb.init(project="SimCSE-for-multilabel", name="unsup-uls")
 
 # 乱数のシードを設定する
 set_seed(42)
@@ -76,3 +76,8 @@ print(type(unsup_model).__name__)
 
 # 教師なしSimCSEの訓練を行う
 trainer.train()
+
+# エンコーダを保存
+encoder_path = "outputs/unsup_uls/encoder"
+unsup_model.encoder.save_pretrained(encoder_path)
+tokenizer.save_pretrained(encoder_path)

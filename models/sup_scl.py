@@ -7,7 +7,7 @@ from transformers.utils import ModelOutput
 from transformers import BatchEncoding
 
 class SimCSEModel(nn.Module):
-    """SCL SimCSEのモデル"""
+    """Sup SimCSEのモデル"""
 
     def __init__(
         self,

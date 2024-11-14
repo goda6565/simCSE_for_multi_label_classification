@@ -7,7 +7,6 @@ def eval_collate_fn(
     examples: list[dict],
 ) -> dict[str, BatchEncoding | Tensor]:
     """SimCSEの検証・テストセットのミニバッチを作成"""
-    # ミニバッチの文ペアに含まれる文（文1と文2）のそれぞれに
     # トークナイザを適用する
     tokenized_texts = tokenizer(
         [example["text"] for example in examples],

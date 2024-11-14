@@ -2,7 +2,7 @@ from transformers import TrainingArguments
 
 # 訓練のハイパーパラメータを設定する
 training_args = TrainingArguments(
-    output_dir="outputs/sup_scl",  # 結果の保存先フォルダ
+    output_dir="outputs/sup_pe",  # 結果の保存先フォルダ
     per_device_train_batch_size=32,  # 訓練時のバッチサイズ
     per_device_eval_batch_size=64,  # 評価時のバッチサイズ
     learning_rate=1e-5,  # 学習率
