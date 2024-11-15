@@ -51,10 +51,10 @@ This is done by pruning the less relevant or infrequent labels from the data set
 
 | Model | batch size | Sampling Method | dev kNN | Test Precision | Test Recall | Test mF1 | Test µF1 |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| princeton-nlp/unsup-simcse-bert-base-uncased |  | - | - | 0.41153 | 0.13454 | 0.17200 | 0.45877 |
-| + UnsupSimCSE | 64 | Random | 0.2158636309666718 | 0.2408 | 0.0850 | 0.1108 | 0.43394 |
-|  | 64 | Unique Label | 0.291811420463481 | 0.2848 | 0.0968 | 0.1259 | 0.47332 |
-| + SCL | 64 | Positive Ensured | 0.3589752362513001 | 0.53003 | 0.25919 | 0.30666 | 0.70249 |
-| + JSCL | 64 | Positive Ensured | 0.355976322534362 | 0.51338 | 0.26266 | 0.30366 | 0.70013 |
-| + DSCL | 64 | Positive Ensured | 0.3367163656979518 | 0.52144 | 0.24800 | 0.29402 | 0.69272 |
-| + SSCL | 64 | Positive Ensured | 0.355976322534362 | 0.48944 | 0.26295 | 0.30421 | 0.70539 |
+| princeton-nlp/unsup-simcse-bert-base-uncased |  | - | - | 0.4115 | 0.1345 | 0.1720 | 0.4588 |
+| + UnsupSimCSE | 64 | Random | 0.2159 | 0.2408 | 0.0850 | 0.1108 | 0.4339 |
+|  | 64 | Unique Label | 0.2918 | 0.2848 | 0.0968 | 0.1259 | 0.4733 |
+| + SCL | 64 | Positive Ensured | 0.3590 | 0.5300 | 0.2592 | 0.3067 | 0.7025 |
+| + JSCL | 64 | Positive Ensured | 0.3560 | 0.5133 | 0.2627 | 0.3037 | 0.7001 |
+| + DSCL | 64 | Positive Ensured | 0.3367 | 0.5214 | 0.2480 | 0.2940 | 0.6927 |
+| + SSCL | 64 | Positive Ensured | 0.3560 | 0.4894 | 0.2630 | 0.3042 | 0.7054 |
