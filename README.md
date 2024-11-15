@@ -16,29 +16,29 @@ Use only series lengths between 200 and 512.
 
 ## Methods
 ### unsup SimCSE 
-#### Unique Label Sampling
+**Unique Label Sampling**\
 Unique Label Sampling is a batch construction method that uses label information.
 
 This method considers the diversity within a batch, ensuring that all labels within the same batch are different.
 
 ### sup SimCSE
-#### SCL
-SCL is a contrastive learning method using the MLTC dataset.
+
+**SCL** is a contrastive learning method using the MLTC dataset.
 
 Sentences with matching labels in the same batch are considered positive pairs, and those without matching labels are considered negative pairs.
 
 SCL only treats samples with exact label matches as positive pairs
 
-#### JSCL
-JSCL is a contrast learning method that computes the similarity between labels using the Jaccard coefficients and applies the similarity as the loss coefficient.
 
-#### DSCL
-DSCL is a contrast learning method that computes the similarity between labels using the Dice coefficients and applies the similarity as the loss coefficient.
+**JSCL** is a contrast learning method that computes the similarity between labels using the Jaccard coefficients and applies the similarity as the loss coefficient.
 
-#### SSCL
-SSCL is a contrast learning method that computes the similarity between labels using the Simpson (Overlap) coefficients and applies the similarity as the loss coefficient.
 
-#### Positive Ensured Sampling
+**DSCL** is a contrast learning method that computes the similarity between labels using the Dice coefficients and applies the similarity as the loss coefficient.
+
+
+**SSCL** is a contrast learning method that computes the similarity between labels using the Simpson (Overlap) coefficients and applies the similarity as the loss coefficient.
+
+**Positive Ensured Sampling**\
 The method randomly selects two different samples (xi , Yi ) and (x + i , Y + i ) with matching labels from the article dataset to construct positive examples (xi , x+ i , Yi , Y + i ). Then, construct a batch {(xi , x+ i , Yi , Y + i )} B i=1 consisting of B positive examples. The SCL learning loss is modified as follows. 
 
 ## Evaluation
