@@ -39,6 +39,7 @@ y_test = np.array(y_test)
 
 model = xgb.XGBClassifier(
     tree_method="hist",
+    device="cuda"
 )
 
 # モデルを訓練
@@ -48,6 +49,7 @@ model.fit(X_train, y_train)
 pred = model.predict(X_test)
 
 # 結果を表示
-print(f"Macro Precision: {precision_score(y_test, pred, average="macro",zero_division=0):.4f}")
-print(f"Macro Recall: {recall_score(y_test, pred, average="macro",zero_division=0):.4f}")
-print(f"Macro F1: {f1_score(y_test, pred, average="macro",zero_division=0):.4f}")
+print(f"Macro Precision: {precision_score(y_test, pred, average="macro",zero_division=0):.5f}")
+print(f"Macro Recall: {recall_score(y_test, pred, average="macro",zero_division=0):.5f}")
+print(f"Macro F1: {f1_score(y_test, pred, average="macro",zero_division=0):.5f}")
+print(f"Micro F1: {f1_score(y_test, pred, average="micro",zero_division=0):.5f}")

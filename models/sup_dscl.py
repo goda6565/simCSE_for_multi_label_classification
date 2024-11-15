@@ -6,8 +6,16 @@ from transformers import AutoModel
 from transformers.utils import ModelOutput
 from transformers import BatchEncoding
 
+def dice_coefficient(vec1, vec2):
+    # 交差部分: 両方が1のインデックスの数
+    intersection = sum(1 for a, b in zip(vec1, vec2) if a == 1 and b == 1)
+    
+    # ダイス係数の計算
+    return 2 * intersection / (len(vec1) + len(vec2)) if (len(vec1) + len(vec2)) != 0 else 0
+
+
 class SimCSEModel(nn.Module):
-    """Sup_scl SimCSEのモデル"""
+    """Sup_dscl SimCSEのモデル"""
 
     def __init__(
         self,
@@ -69,7 +77,7 @@ class SimCSEModel(nn.Module):
         # 訓練用の処理
         tokenized_texts_1 = inputs["tokenized_texts_1"]
         tokenized_texts_2 = inputs["tokenized_texts_2"]
-        
+        label = inputs["label_list"]
         labels = inputs["labels"]
 
         # 文ペアをベクトルに変換する
@@ -79,19 +87,22 @@ class SimCSEModel(nn.Module):
         # loss計算
         loss = 0
         for i in range(len(encoded_texts_1)):
-            # 類似度行列を作成し、交差エントロピー損失を計算
-            # 各行数
-            num_label = len(labels[i])
-            # 各行をラベル数複製する
-            repeated_tensors = [encoded_texts_1[i].clone() for _ in range(num_label)]
-            repeated_tensor_stack = torch.stack(repeated_tensors)
-            # 類似行列
-            sim_matrix = F.cosine_similarity(
-            repeated_tensor_stack.unsqueeze(1),
-            encoded_texts_2.unsqueeze(0),
-            dim=2,
-            )
-            # SCL LOSS
-            loss += F.cross_entropy(sim_matrix / self.temperature, labels[i]) / num_label
+            loss_i = 0
+            # 分母の計算
+            denominator = sum(
+                torch.exp(F.cosine_similarity(encoded_texts_1[i].unsqueeze(0), encoded_texts_2[j].unsqueeze(0)) / self.temperature)
+                for j in range(len(encoded_texts_1))
+            )   
+            # 交差エントロピー損失を計算
+            for s in labels[i]:
+                # 同じバッチ内で他のサンプルとの比較
+                dice = dice_coefficient(label[i], label[s])
+                # コサイン類似度
+                sim_ij = F.cosine_similarity(encoded_texts_1[i].unsqueeze(0), encoded_texts_2[s].unsqueeze(0)) / self.temperature
+                sim_ij = torch.exp(sim_ij)
+                # ロスの計算
+                loss_i += dice * torch.log(sim_ij / denominator)
+                
+            loss += -1 * loss_i / len(labels[i])
 
         return ModelOutput(loss=loss)

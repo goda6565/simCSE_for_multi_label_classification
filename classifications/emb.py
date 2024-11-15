@@ -4,7 +4,7 @@ import torch
 from transformers import AutoModel, AutoTokenizer
 
 # モデル読み込み
-model_path = "outputs/sup_pe/encoder"
+model_path = "outputs/unsup_uls/encoder"
 tokenizer = AutoTokenizer.from_pretrained(model_path)
 encoder = AutoModel.from_pretrained(model_path)
 

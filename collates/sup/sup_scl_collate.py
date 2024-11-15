@@ -7,39 +7,33 @@ def sup_train_collate_fn(
     examples: list[dict],
 ) -> dict[str, BatchEncoding | Tensor]:
     """訓練セットのミニバッチを作成"""
-    texts = []
-    same_label_texts = []
-    start_labels = [0]
-    end_labels = []
-    labels = []
-
-    for i, example in enumerate(examples):
-        texts.append(example["text"])
-        if i != 0:
-          start_labels.append(end_labels[i-1]+1)
-        # same_label_sentenceを収集
-        same_labels = [text["same_label_text"] for text in examples if text["labels"] == example["labels"]]
-        same_label_texts.extend(same_labels)
-        end_labels.append(len(same_labels)+start_labels[i]-1)
+    same_label_index = []
+    for example in examples:
+        index = []
+        for i, pair in enumerate(examples):
+            if example["labels"] == pair["labels"]:
+                index.append(i)
+        same_label_index.append(index)
 
     # ミニバッチに含まれる前提文と仮説文にトークナイザを適用する
     tokenized_texts1 = tokenizer(
-        texts,
+        [example["text"] for example in examples],
         padding=True,
         truncation=True,
         max_length=512,
         return_tensors="pt",
     )
     tokenized_texts2 = tokenizer(
-        same_label_texts,
+        [example["same_label_text"] for example in examples],
         padding=True,
         truncation=True,
         max_length=512,
         return_tensors="pt",
     )
 
-    for i in range(len(texts)):
-      labels.append(torch.arange(start_labels[i], end_labels[i] + 1))
+    labels = []
+    for i in range(len(examples)):
+      labels.append(torch.tensor(same_label_index[i]))
 
     return {
         "tokenized_texts_1": tokenized_texts1,
