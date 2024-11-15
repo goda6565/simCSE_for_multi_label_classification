@@ -15,18 +15,14 @@ Use only series lengths between 200 and 512.
 [princeton-nlp/unsup-simcse-bert-base-uncased](https://huggingface.co/princeton-nlp/unsup-simcse-bert-base-uncased)
 
 ## Methods
-### unsup SimCSE 
+### Unsup SimCSE 
 **Unique Label Sampling**\
 Unique Label Sampling is a batch construction method that uses label information.
-
 This method considers the diversity within a batch, ensuring that all labels within the same batch are different.
 
-### sup SimCSE
+### Sup SimCSE
 
-**SCL** is a contrastive learning method using the MLTC dataset.
-
-Sentences with matching labels in the same batch are considered positive pairs, and those without matching labels are considered negative pairs.
-
+**SCL** is a contrastive learning method using the MLTC dataset. Sentences with matching labels in the same batch are considered positive pairs, and those without matching labels are considered negative pairs.
 SCL only treats samples with exact label matches as positive pairs
 
 
@@ -44,14 +40,11 @@ The method randomly selects two different samples (xi , Yi ) and (x + i , Y + i 
 ## Evaluation
 ### Training Detail
 At each training step, a performance score is computed, with the highest-scoring checkpoint selected for evaluation. 
-
 To facilitate straightforward kNN classification, the Macro-F1 score is assessed on single-label samples within the validation set. 
-
 However, given the limited presence of single-label data in the current dataset, we transform the validation set into a single-label format to ensure reliable evaluation.
 
 ### Pruned Problem Transformation (PPT)
 A Pruned Problem Transformation (PPT) method is an approach in multi-label classification where the goal is to simplify the classification problem by transforming it into a series of single-label classification problems. 
-
 This is done by pruning the less relevant or infrequent labels from the data set and validation In this case, based on the frequency of labels in the validation data set, the most frequent label in each data set was taken as the label for that data.
 
 ## Results
